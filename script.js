@@ -1,5 +1,5 @@
 function add() {
-  return arguments[0] + arguments[1];
+  return parseInt(arguments[0]) + parseInt(arguments[1]);
 };
 
 function sub() {
@@ -35,8 +35,10 @@ function operate(op, a, b){
 
 
 let displayValue="";
+let op="";
 function updateDisplay(up){
- if (displayValue.length < 25){ screen.textContent += up;
+ if (displayValue.length < 25){ 
+  screen.textContent += up;
   displayValue += up;}
 }
 
@@ -63,17 +65,24 @@ dot.addEventListener('click', () =>{
   updateDisplay(dot.textContent);
 })
 
+function resolve(val) {
+  let str = val.split(/[+-/*]/);
+  //updateDisplay(operate(op, str[0], str[1]));
+  clearDisplay();
+  updateDisplay(operate(op, str[0], str[1]));
+  
+}
+
 equals.addEventListener('click', () =>{
   resolve(displayValue);
 })
 
-function resolve(value){
-  //enableDot();
-}
+
 
 specials.forEach(spec =>{
   spec.addEventListener('click', () =>{
     updateDisplay(spec.value);
+    op = spec.value;
     enableDot();
   })
 });
