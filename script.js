@@ -14,6 +14,10 @@ function divide() {
   return arguments[0] / arguments[1];
 };
 
+function mod() {
+  return arguments[0] % arguments[1];
+};
+
 function operate(op, a, b){
   switch (op){
     case '+':
@@ -24,10 +28,64 @@ function operate(op, a, b){
       return multi(a,b);
     case '/':
       return divide(a,b);
+    case '%':
+      return mod(a,b);
   };
 }
 
-console.log(operate('+', 6, 2));
-console.log(operate('-', 6, 2));
-console.log(operate('/', 6, 2));
-console.log(operate('*', 6, 2));
+
+let displayValue="";
+function updateDisplay(up){
+ if (displayValue.length < 25){ screen.textContent += up;
+  displayValue += up;}
+}
+
+function clearDisplay(){
+  screen.textContent = "";
+  displayValue = "";
+}
+
+const screen = document.querySelector('.input');
+const clear = document.querySelectorAll('.btnclr');
+
+const numbers = document.querySelectorAll('.num');
+const specials = document.querySelectorAll('.special');
+
+const equals = document.querySelector('.equal');
+
+const dot = document.querySelector('.dot');
+function enableDot(){
+  dot.disabled = false;
+}
+
+dot.addEventListener('click', () =>{
+  dot.disabled = true;
+  updateDisplay(dot.textContent);
+})
+
+equals.addEventListener('click', () =>{
+  resolve(displayValue);
+})
+
+function resolve(value){
+  //enableDot();
+}
+
+specials.forEach(spec =>{
+  spec.addEventListener('click', () =>{
+    updateDisplay(spec.value);
+    enableDot();
+  })
+});
+
+numbers.forEach(nums =>{
+  nums.addEventListener('click', ()=>{
+    updateDisplay(nums.textContent);
+  })
+});
+
+clear.forEach(spec =>{
+  spec.addEventListener('click', e=>{
+    clearDisplay();
+  })
+});

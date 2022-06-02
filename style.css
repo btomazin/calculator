@@ -4,6 +4,7 @@
 	display: flex;
 	flex-flow: wrap;
 	width: 270px;
+  
 }
 
 .calculator {
@@ -19,13 +20,14 @@
 .screen{
 	background-color: rgb(180, 255, 255);
     width: 255px;
+    height: 21px;
     margin: 0 0 0 13px;
-    padding: 10px 3px;
+    padding: 20px 3px;
     text-align: right;
     font-family: Arial, Helvetica, sans-serif;
     font-size: large;
-	border-radius: 2px;
-	border: solid black 1px;
+	border-radius: 3px;
+	border: solid black 2px;
 }
 
 .calc-buttons{
@@ -49,6 +51,11 @@
 }
 
 .special {
+	
+	background-color: rgb(249, 196, 242);
+}
+
+.equal {
 	
 	background-color: rgb(249, 196, 242);
 }
