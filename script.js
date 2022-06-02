@@ -87,5 +87,6 @@ numbers.forEach(nums =>{
 clear.forEach(spec =>{
   spec.addEventListener('click', e=>{
     clearDisplay();
+    enableDot();
   })
 });
