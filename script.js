@@ -11,7 +11,12 @@ function multi() {
 };
 
 function divide() {
-  return arguments[0] / arguments[1];
+  if (arguments[1] == 0){
+    alert("You are a funny guy!");
+    return 0;
+  } else{
+    return arguments[0] / arguments[1];
+  }
 };
 
 function mod() {
@@ -61,6 +66,11 @@ function enableDot(){
 }
 
 dot.addEventListener('click', () =>{
+  if (flag){
+    clearDisplay();
+    flag = false;
+  }
+
   dot.disabled = true;
   updateDisplay(dot.textContent);
 })
@@ -118,6 +128,7 @@ function refresh() {
   op = "";
   disVal1 = 0;
   disVal2 = 0; 
+  flag = true;
 }
 
 clear.addEventListener('click', ()=>{
@@ -136,10 +147,15 @@ back.addEventListener('click',()=>{
 
   if (str.length >= 1 && typedFlag){
     screen.textContent = str.slice(0, -1);
-  }
+  } 
   else {
     screen.textContent = 0;
     refresh();
+  }
+
+  if(screen.textContent ==""){
+    flag = true;
+    screen.textContent = disVal1;
   }
 
   checkDot(screen.textContent);
