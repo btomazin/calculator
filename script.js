@@ -1,5 +1,5 @@
 function add() {
-  return parseInt(arguments[0]) + parseInt(arguments[1]);
+  return Number(arguments[0]) + Number(arguments[1]);
 };
 
 function sub() {
@@ -37,8 +37,10 @@ function operate(op, a, b){
 let disVal1="";
 let disVal2="";
 let op="";
+
 function updateDisplay(up){
   screen.textContent += up;
+  checkDot(screen.textContent);
 }
 
 function clearDisplay(){
@@ -46,7 +48,7 @@ function clearDisplay(){
 }
 
 const screen = document.querySelector('.input');
-const clear = document.querySelectorAll('.btnclr');
+
 
 const numbers = document.querySelectorAll('.num');
 const specials = document.querySelectorAll('.special');
@@ -64,34 +66,37 @@ dot.addEventListener('click', () =>{
 })
 
 function resolve() {
-  //let str = val.split(/[+-/*]/);
-  //updateDisplay(operate(op, str[0], str[1]));
+  disVal2 = screen.textContent;
   clearDisplay();
-  console.log(op + " " + disVal1 + " " + disVal2)
-  updateDisplay(operate(op, disVal2, disVal1));
+  updateDisplay(operate(op, disVal1, disVal2));
+  typedFlag = false;
   
 }
 
 equals.addEventListener('click', () =>{
-  disVal1 = screen.textContent;
-  resolve();
-  refresh();
+ 
+ if (op != "") {   
+    resolve();
+    refresh();
+  }
 })
 
-
+let flag = false;
 
 specials.forEach(spec =>{
   spec.addEventListener('click', () =>{
-    //updateDisplay(spec.value);
+    if (op !== "" && !flag){
+      resolve();
+    }
     op = spec.value;
-    disVal2 = screen.textContent;
-    clearDisplay();
-    enableDot();
+    disVal1 = screen.textContent;
+    typedFlag = false;
+    flag = true;
   })
 });
 
 function isZero(){
-  return (screen.textContent == 0);
+  return (screen.textContent === '0');
 }
 
 numbers.forEach(nums =>{
@@ -99,6 +104,12 @@ numbers.forEach(nums =>{
     if (isZero()){
       clearDisplay();}
 
+    if (flag) {
+      clearDisplay();
+      enableDot();
+      flag = false;
+    }
+    typedFlag = true;
     updateDisplay(nums.textContent);
     }
   )});
@@ -109,11 +120,35 @@ function refresh() {
   disVal2 = 0; 
 }
 
-clear.forEach(spec =>{
-  spec.addEventListener('click', e=>{
+clear.addEventListener('click', ()=>{
     clearDisplay();
     refresh();
     enableDot();
-    screen.textContent=0;
-  })
+    screen.textContent = 0;
 });
+
+let typedFlag = false;
+
+back.addEventListener('click',()=>{
+  let str = screen.textContent;
+  if (str.length === 2 && str[0] === '-'){
+    str ="";}
+
+  if (str.length >= 1 && typedFlag){
+    screen.textContent = str.slice(0, -1);
+  }
+  else {
+    screen.textContent = 0;
+    refresh();
+  }
+
+  checkDot(screen.textContent);
+});
+
+function checkDot(str){
+  if (!(str.includes("."))){
+    enableDot();
+  } else {
+    dot.disabled = true;
+  }
+}
