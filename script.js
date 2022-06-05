@@ -34,17 +34,15 @@ function operate(op, a, b){
 }
 
 
-let displayValue="";
+let disVal1="";
+let disVal2="";
 let op="";
 function updateDisplay(up){
- if (displayValue.length < 25){ 
   screen.textContent += up;
-  displayValue += up;}
 }
 
 function clearDisplay(){
   screen.textContent = "";
-  displayValue = "";
 }
 
 const screen = document.querySelector('.input');
@@ -65,37 +63,57 @@ dot.addEventListener('click', () =>{
   updateDisplay(dot.textContent);
 })
 
-function resolve(val) {
-  let str = val.split(/[+-/*]/);
+function resolve() {
+  //let str = val.split(/[+-/*]/);
   //updateDisplay(operate(op, str[0], str[1]));
   clearDisplay();
-  updateDisplay(operate(op, str[0], str[1]));
+  console.log(op + " " + disVal1 + " " + disVal2)
+  updateDisplay(operate(op, disVal2, disVal1));
   
 }
 
 equals.addEventListener('click', () =>{
-  resolve(displayValue);
+  disVal1 = screen.textContent;
+  resolve();
+  refresh();
 })
 
 
 
 specials.forEach(spec =>{
   spec.addEventListener('click', () =>{
-    updateDisplay(spec.value);
+    //updateDisplay(spec.value);
     op = spec.value;
+    disVal2 = screen.textContent;
+    clearDisplay();
     enableDot();
   })
 });
 
+function isZero(){
+  return (screen.textContent == 0);
+}
+
 numbers.forEach(nums =>{
   nums.addEventListener('click', ()=>{
+    if (isZero()){
+      clearDisplay();}
+
     updateDisplay(nums.textContent);
-  })
-});
+    }
+  )});
+
+function refresh() {
+  op = "";
+  disVal1 = 0;
+  disVal2 = 0; 
+}
 
 clear.forEach(spec =>{
   spec.addEventListener('click', e=>{
     clearDisplay();
+    refresh();
     enableDot();
+    screen.textContent=0;
   })
 });
