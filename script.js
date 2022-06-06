@@ -62,20 +62,15 @@ buttons.addEventListener('click', e =>{
   // }
 
   if (target.classList.contains('special')){
-    operatorPressed(target.value);
-      
+    operatorPressed(target.value); 
   } else if (target.classList.contains('num')) {
     inputNum(target.textContent);
-
   } else if (target.id === 'clear'){
     resetCalculator();
-
   }else if (target.id === 'back'){
-    resetCalculator();
-
+    backspace();
   }else if (target.classList.contains('dot')){
     inputDot(target.textContent);
-
   }
   updateDisplay();
 
@@ -86,6 +81,15 @@ function resetCalculator (){
   calculator.firstVal = null;
   calculator.op = null;
   calculator.waitForSecond = false;
+}
+
+function backspace(){
+  if (!calculator.waitForSecond){
+    calculator.display = calculator.display.slice(0, -1);
+    if(calculator.display === ""){
+      calculator.display = '0';
+    }
+  }
 }
 
 function inputNum(num){
