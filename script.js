@@ -67,10 +67,10 @@ function handleInput(value){
     case '.':
       inputDot(value);
       break;
-    case 'clear':
+    case 'Delete':
       resetCalculator();
       break;
-    case 'back':
+    case 'Backspace':
       backspace();
       break;
     default:
@@ -92,6 +92,10 @@ buttons.addEventListener('click', e =>{
     return;
   else 
     handleInput(value);
+})
+
+document.addEventListener('keydown', e =>{
+  (e.key === 'Enter') ? handleInput('=') : handleInput(e.key);
 })
 
 function resetCalculator (){
