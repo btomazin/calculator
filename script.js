@@ -35,6 +35,8 @@ function operate(op, a, b){
       return divide(a,b);
     case '%':
       return mod(a,b);
+    case '=':
+      return b;
   };
 }
 
@@ -52,28 +54,44 @@ function updateDisplay(){
 
 updateDisplay();
 
+function handleInput(value){
+  switch (value){
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '=':
+    case '%':
+      operatorPressed(value);
+      break;
+    case '.':
+      inputDot(value);
+      break;
+    case 'clear':
+      resetCalculator();
+      break;
+    case 'back':
+      backspace();
+      break;
+    default:
+      if (Number.isInteger(parseFloat(value))){
+        inputNum(value);
+      }
+  }
+
+  updateDisplay();
+}
+
 const buttons = document.querySelector('.buttons');
 
 buttons.addEventListener('click', e =>{
   const target = e.target;
-
-  // if (!target.classList.contains('calc-buttons')){
-  //   return;
-  // }
-
-  if (target.classList.contains('special')){
-    operatorPressed(target.value); 
-  } else if (target.classList.contains('num')) {
-    inputNum(target.textContent);
-  } else if (target.id === 'clear'){
-    resetCalculator();
-  }else if (target.id === 'back'){
-    backspace();
-  }else if (target.classList.contains('dot')){
-    inputDot(target.textContent);
-  }
-  updateDisplay();
-
+  const value = target.value;
+ 
+  if(!value)
+    return;
+  else 
+    handleInput(value);
 })
 
 function resetCalculator (){
@@ -125,7 +143,7 @@ function operatorPressed(newOp) {
     calculator.firstVal = input;
   } else if(calculator.op){
     const result = operate(calculator.op, calculator.firstVal, input);
-    calculator.display = String(result);
+    calculator.display = `${parseFloat(result.toFixed(7))}`;
     calculator.firstVal = result;
   }
 
