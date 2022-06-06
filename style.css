@@ -4,10 +4,33 @@
 	display: flex;
 	flex-flow: wrap;
 	width: 270px;
-  
+}
+
+body{
+	background-color: rgb(214, 214, 213);
+	padding: 0;
+	margin: 0;
+
+}
+
+#head{
+	font-size: 40px;
+	font-weight: 900;
+	font-family:Arial, Helvetica, sans-serif;
+	color: rgb(68, 23, 105);
+	background-color: rgb(148, 124, 124);
+	margin: 0;
+	padding: 5px 20px;
+	text-align: center;
+	border-bottom: 4px solid black;
+}
+#mid{
+	padding: 20px;
+	
 }
 
 .calculator {
+	margin: auto;
 	background-color:rgb(180, 77, 201);
 	padding: 15px 5px 0 0;
 	width: 290px;
