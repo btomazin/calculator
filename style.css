@@ -19,13 +19,11 @@
 
 .screen{
 	background-color: rgb(180, 255, 255);
-    width: 255px;
-    height: 21px;
-    margin: 0 0 0 13px;
-    padding: 20px 3px;
-    text-align: right;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: large;
+	width: 255px;
+	height: 21px;
+	margin: 0 0 0 13px;
+	padding: 20px 3px;
+
 	border-radius: 3px;
 	border: solid black 2px;
 }
@@ -63,4 +61,17 @@
 .btnclr {
 	
 	background-color: rgb(255, 255, 255);
+}
+
+.input {
+	border: 0;
+	background-color: rgb(180, 255, 255);
+	text-align: right;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	width: 252px;
+}
+
+.input:focus{
+	outline: none;
 }

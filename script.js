@@ -38,133 +38,94 @@ function operate(op, a, b){
   };
 }
 
-
-let disVal1="";
-let disVal2="";
-let op="";
-
-function updateDisplay(up){
-  screen.textContent += up;
-  checkDot(screen.textContent);
+const calculator = {
+  display: '0',
+  firstVal: null,
+  waitForSecond: false,
+  op: null,
 }
 
-function clearDisplay(){
-  screen.textContent = "";
+function updateDisplay(){
+  const display = document.querySelector('.input');
+  display.value = calculator.display;  
 }
 
-const screen = document.querySelector('.input');
+updateDisplay();
 
+const buttons = document.querySelector('.buttons');
 
-const numbers = document.querySelectorAll('.num');
-const specials = document.querySelectorAll('.special');
+buttons.addEventListener('click', e =>{
+  const target = e.target;
 
-const equals = document.querySelector('.equal');
+  // if (!target.classList.contains('calc-buttons')){
+  //   return;
+  // }
 
-const dot = document.querySelector('.dot');
-function enableDot(){
-  dot.disabled = false;
-}
+  if (target.classList.contains('special')){
+    operatorPressed(target.value);
+      
+  } else if (target.classList.contains('num')) {
+    inputNum(target.textContent);
 
-dot.addEventListener('click', () =>{
-  if (flag){
-    clearDisplay();
-    flag = false;
+  } else if (target.id === 'clear'){
+    resetCalculator();
+
+  }else if (target.id === 'back'){
+    resetCalculator();
+
+  }else if (target.classList.contains('dot')){
+    inputDot(target.textContent);
+
   }
+  updateDisplay();
 
-  dot.disabled = true;
-  updateDisplay(dot.textContent);
 })
 
-function resolve() {
-  disVal2 = screen.textContent;
-  clearDisplay();
-  updateDisplay(operate(op, disVal1, disVal2));
-  typedFlag = false;
-  
+function resetCalculator (){
+  calculator.display = '0';
+  calculator.firstVal = null;
+  calculator.op = null;
+  calculator.waitForSecond = false;
 }
 
-equals.addEventListener('click', () =>{
- 
- if (op != "") {   
-    resolve();
-    refresh();
-  }
-})
-
-let flag = false;
-
-specials.forEach(spec =>{
-  spec.addEventListener('click', () =>{
-    if (op !== "" && !flag){
-      resolve();
-    }
-    op = spec.value;
-    disVal1 = screen.textContent;
-    typedFlag = false;
-    flag = true;
-  })
-});
-
-function isZero(){
-  return (screen.textContent === '0');
-}
-
-numbers.forEach(nums =>{
-  nums.addEventListener('click', ()=>{
-    if (isZero()){
-      clearDisplay();}
-
-    if (flag) {
-      clearDisplay();
-      enableDot();
-      flag = false;
-    }
-    typedFlag = true;
-    updateDisplay(nums.textContent);
-    }
-  )});
-
-function refresh() {
-  op = "";
-  disVal1 = 0;
-  disVal2 = 0; 
-  flag = true;
-}
-
-clear.addEventListener('click', ()=>{
-    clearDisplay();
-    refresh();
-    enableDot();
-    screen.textContent = 0;
-});
-
-let typedFlag = false;
-
-back.addEventListener('click',()=>{
-  let str = screen.textContent;
-  if (str.length === 2 && str[0] === '-'){
-    str ="";}
-
-  if (str.length >= 1 && typedFlag){
-    screen.textContent = str.slice(0, -1);
-  } 
-  else {
-    screen.textContent = 0;
-    refresh();
-  }
-
-  if(screen.textContent ==""){
-    flag = true;
-    screen.textContent = disVal1;
-  }
-
-  checkDot(screen.textContent);
-});
-
-function checkDot(str){
-  if (!(str.includes("."))){
-    enableDot();
+function inputNum(num){
+  const display = calculator.display;
+  if(calculator.waitForSecond === true){
+    calculator.display = num;
+    calculator.waitForSecond = false;
   } else {
-    dot.disabled = true;
+    calculator.display = (display === '0') ? num: display + num;
   }
+}
+
+function inputDot(dot){
+  if (calculator.waitForSecond === true){
+    calculator.display = '0.';
+    calculator.waitForSecond = false;
+  }
+
+  if(!calculator.display.includes(dot)){
+    calculator.display+= dot;
+  }
+}
+
+function operatorPressed(newOp) {
+  const input = Number(calculator.display);
+
+  if (calculator.op && calculator.waitForSecond){
+    calculator.op = newOp;
+    return;
+  }
+
+  if (calculator.firstVal === null && !isNaN(input)){
+    calculator.firstVal = input;
+  } else if(calculator.op){
+    const result = operate(calculator.op, calculator.firstVal, input);
+    calculator.display = String(result);
+    calculator.firstVal = result;
+  }
+
+  calculator.waitForSecond = true;
+  calculator.op = newOp;
+
 }
