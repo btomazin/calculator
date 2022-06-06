@@ -5,11 +5,16 @@
 	flex-flow: wrap;
 	width: 270px;
 }
-
+html{
+	height: 100%;
+}
 body{
 	background-color: rgb(214, 214, 213);
 	padding: 0;
 	margin: 0;
+	display: flex;
+	flex-direction: column;
+	height: 100%; 
 
 }
 
@@ -17,15 +22,26 @@ body{
 	font-size: 40px;
 	font-weight: 900;
 	font-family:Arial, Helvetica, sans-serif;
-	color: rgb(68, 23, 105);
-	background-color: rgb(148, 124, 124);
+	color: antiquewhite;
+	background-color: rgb(77, 69, 69);
 	margin: 0;
 	padding: 5px 20px;
 	text-align: center;
-	border-bottom: 4px solid black;
+	border-bottom: 0px solid black;
 }
 #mid{
 	padding: 20px;
+	flex: 1 0 auto; 
+}
+
+#footer{
+	background-color: rgb(77, 69, 69);
+	color: antiquewhite;
+	padding: 5px;
+	font-size: 30px;
+	display: flex;
+	gap: 10px;
+	justify-content: center;
 	
 }
 
@@ -48,7 +64,7 @@ body{
 	padding: 20px 3px;
 
 	border-radius: 3px;
-	border: solid black 2px;
+	border: solid black 1px;
 }
 
 .calc-buttons{
@@ -90,7 +106,7 @@ body{
 	border: 0;
 	background-color: rgb(180, 255, 255);
 	text-align: right;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: large;
 	width: 252px;
 }
