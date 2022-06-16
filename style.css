@@ -52,8 +52,8 @@ body{
 	padding: 15px 5px 0 0;
 	width: 290px;
 	border-radius: 2px 2px 5px 5px;
-	border: solid rgb(146, 35, 163) 3px;
-	box-shadow: 4px 4px 3px rgb(148, 152, 153);
+	border: solid rgb(146, 35, 163) 2px;
+	box-shadow: 3px 3px 3px rgb(148, 152, 153);
 	
 }
 
@@ -72,6 +72,7 @@ body{
 	width: 65px;
 	height: 40px;
 	margin: 1px;
+	border: solid rgb(146, 35, 163) 1px;
 	border-radius: 3px;
 	background-color: rgb(218, 123, 206);
 }
